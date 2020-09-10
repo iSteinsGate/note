@@ -12,7 +12,7 @@ IP:192.169.199.12
 
 **目录结构**
 
-![image-20200910160403138](https://raw.githubusercontent.com/iSteinsGate/note/master/assets/image-20200910160403138.png)
+![](https://raw.githubusercontent.com/iSteinsGate/picture/master/assets/image-20200910160403138.png)
 
 - hycloud-admin.jar（可运行jar包）
 - start.sh （启动脚本）

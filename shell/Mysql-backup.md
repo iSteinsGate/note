@@ -166,7 +166,7 @@ ls
 
 执行成功后
 
-![image-20200910145353310](https://raw.githubusercontent.com/iSteinsGate/note/master/assets/image-20200910145353310.png)
+![](https://raw.githubusercontent.com/iSteinsGate/picture/master/assets/image-20200910145353310.png)
 
 ## linux定时任务
 
@@ -203,5 +203,5 @@ crontab -l
 crontab -r
 ```
 
-![image-20200910153223670](https://raw.githubusercontent.com/iSteinsGate/note/master/assets/image-20200910153223670.png)
+![](https://raw.githubusercontent.com/iSteinsGate/picture/master/assets/image-20200910153223670.png)
 
