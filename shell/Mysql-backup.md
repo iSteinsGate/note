@@ -1,11 +1,53 @@
 # mysql备份还原
 
+mysqldump工具介绍
+
+```bash
+mysqldump--导出工具
+
+#导出单个数据库：结构 无数据
+[root@localhost ~]#mysqldump -h127.0.0.1 -uroot -p --opt --no-data db_name >~/db_name.sql
+
+#导出单个数据库：有数据 无结构
+[root@localhost ~]#mysqldump -h127.0.0.1 -uroot -p --opt --no-create-info db_name >~/db_name.sql
+
+#导出单个数据库：结构+数据
+[root@localhost ~]#mysqldump -h127.0.0.1 -uroot -p --opt db_name >~/db_name.sql
+
+#导出单个数据库：结构+数据+函数+存储过程
+[root@localhost ~]#mysqldump -h127.0.0.1 -uroot -p --opt -R db_name >~/db_name.sql
+
+#导出多个数据库：结构
+[root@localhost ~]#mysqldump -h127.0.0.1 -uroot -p --opt --databases db_name1 db_name2 >~/db_name.sql
+
+#导出单个表：结构 无数据
+[root@localhost ~]#mysqldump -h127.0.0.1 -uroot -p --opt --no-data -d db_name table>~/table_name.sql
+
+#导出单个表：结构 包含数据
+[root@localhost ~]#mysqldump -h127.0.0.1 -uroot -p --opt dbname  tablename>～/tablename.sql
+
+mysql导入：
+[root@localhost ~]#mysql -u root -p 
+[root@localhost ~]#use  要导入的数据库
+[root@localhost ~]#source /home/1.sql
+
+或者
+[root@localhost ~]#mysql -u root -p< /home/1.sql
+
+注：
+##--opt==--add-drop-table + --add-locks + --create-options + --disables-keys + --extended-insert + --lock-tables + --quick + --set+charset
+##默认使用--opt，--skip-opt禁用--opt参数
+```
+
 ## 备份
 
 1. 直接使用命令
 
 ```bash
+#只备份数据和结构
 mysqldump -h127.0.0.1 -uroot -p123456 dbname  >/usr/local/db-backup/dbname-2020-0810.bak.sql
+#备份数据和机构以及函数和存储过程
+mysqldump -h127.0.0.1 -uroot -p123456 --opt -R dbname  >/usr/local/db-backup/dbname-2020-0810.bak.sql
 ```
 
 2. 备份脚本（backup.sh）
@@ -33,7 +75,7 @@ fi
 echo "开始备份..."
 echo "开始备份..." >> $backup_dir/log.txt
 #备份命令
-mysqldump -h${ip} -u${username} -p${password} ${databaseName}  >${backup_dir}/${databaseName}-${d}.bak.sql
+mysqldump -h${ip} -u${username} -p${password} --opt -R ${databaseName}  >${backup_dir}/${databaseName}-${d}.bak.sql
 echo "正在检查是否需要删除多余备份....." >> $backup_dir/log.txt
 #写创建备份日志
 echo "create $backup_dir/$databaseName-$d.bak.sql" >> $backup_dir/log.txt
@@ -118,7 +160,7 @@ echo "开始备份..."
 echo "开始备份..." >> \$backup_dir/log.txt
 #备份命令
 echo "执行备份命令："
-echo "mysqldump -h\${ip} -u\${username} -p\${password} \${databaseName}  >\${backup_dir}/\${databaseName}-\${d}.bak.sql"
+echo "mysqldump -h\${ip} -u\${username} -p\${password} --opt -R \${databaseName}  >\${backup_dir}/\${databaseName}-\${d}.bak.sql"
 mysqldump -h\${ip} -u\${username} -p\${password} \${databaseName}  >\${backup_dir}/\${databaseName}-\${d}.bak.sql
 echo "正在检查是否需要删除多余备份....." >> \$backup_dir/log.txt
 #写创建备份日志
