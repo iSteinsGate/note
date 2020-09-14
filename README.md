@@ -4,10 +4,12 @@
 
 [Docker命令文档](https://github.com/iSteinsGate/note/blob/master/docker.md)
 
-[Mysql自动备份脚本文档](https://github.com/iSteinsGate/note/blob/master/shell/Mysql-backup.md)
+[Mysql自动备份脚本文档](https://github.com/iSteinsGate/note/blob/master/shell/mysql-backup.md)
 
-[Idea一键部署jar(nohup)文档](https://github.com/iSteinsGate/note/blob/master/shell/Idea-deploy-jar-nohup.md)
+[Idea一键部署jar(nohup)文档](https://github.com/iSteinsGate/note/blob/master/shell/idea-deploy-jar-nohup.md)
 
-[Idea一键部署jar(docker)文档](https://github.com/iSteinsGate/note/blob/master/shell/Idea-deploy-jar-docker.md)
+[Idea一键部署jar(docker)文档](https://github.com/iSteinsGate/note/blob/master/shell/idea-deploy-jar-docker.md)
+
+[Mybatis文档](https://github.com/iSteinsGate/note/blob/master/mybatis.md)
 
 ...
