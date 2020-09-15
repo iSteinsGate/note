@@ -20,7 +20,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Mirror the Github organization repos to Gitee.
-      uses: Yikun/hub-mirror-action@v0.01
+      uses: Yikun/gitee-mirror-action@v0.01
       with:
          # Gitee对应的秘钥
         private_key: ${{ secrets.GITEE_PRIVATE_KEY }}
