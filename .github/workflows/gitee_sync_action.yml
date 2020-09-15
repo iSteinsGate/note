@@ -20,12 +20,13 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Mirror the Github organization repos to Gitee.
-      uses: iSteinsGate/note@master
+      uses: Yikun/hub-mirror-action@master
       with:
-        # Gitee对应的秘钥
-        private_key: ${{ secrets.GITEE_PRIVATE_KEY }}
         # 需要同步的Github组织名（源）
-        github_org: note
+        src: iSteinsGate/note
         # 需要同步到的Gitee的组织名（目的）
-        gitee_org: note
-    
+        dst: iSteinsGate/note
+        # Gitee对应的秘钥
+        dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+        dst_token: ${{ secrets.GITEE_TOKEN }}
+        account_type: org
