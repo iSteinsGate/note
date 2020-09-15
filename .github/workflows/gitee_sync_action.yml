@@ -19,12 +19,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Hub Mirror Action.
+    - name: Mirror the Github organization repos to Gitee.
       uses: Yikun/hub-mirror-action@master
-      with:
-        src: iSteinsGate/note
-        dst: tsinghui365/note
+      with: 
+        src: github/iSteinsGate
+        dst: gitee/tsinghui365
         dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
         dst_token: ${{ secrets.GITEE_TOKEN }}
-        account_type: org
-        force_update: true
+        white_list: "note"
