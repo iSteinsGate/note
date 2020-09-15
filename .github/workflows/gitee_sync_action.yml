@@ -20,10 +20,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Hub Mirror Action.
-      uses: Yikun/hub-mirror-action@v0.09
+      uses: Yikun/hub-mirror-action@master
       with:
         src: github/note
         dst: gitee/note
         dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
         dst_token: ${{ secrets.GITEE_TOKEN }}
         account_type: org
+        force_update: true
