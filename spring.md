@@ -14,12 +14,13 @@ graph TD
 
 FactoryBean
 
+BeanDefinition
 
+BeanFactory组建完成，得到的是BeanDefinition对象集合
 
-- BeanDefinition
-- BeanFactory组建完成，得到的是BeanDefinition对象集合
-- BeanFactoryPostProcessor（BeanFactory的后置处理器），可以修改BeanDefinition定义
-- BeanPostProcessor(Bean的后置处理器)
+BeanFactoryPostProcessor（BeanFactory的后置处理器），可以修改BeanDefinition定义
+
+BeanPostProcessor(Bean的后置处理器)
 
 
 
