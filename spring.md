@@ -16,6 +16,12 @@
 
 ## Bean生命周期
 
+简化流程：
+
+![test](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/20200916161603.png)
+
+详细流程图：
+
 ![image-20200915214914132](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/image-20200915214914132.png)
 
 
