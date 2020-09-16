@@ -12,11 +12,11 @@
 
 ![image-20200915214544933](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/image-20200915214544933.png)
 
-![image-20200915215400858](C:\Users\tanqi\AppData\Roaming\Typora\typora-user-images\image-20200915215400858.png)
+![image-20200915215400858](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/image-20200915215400858.png)
 
 ## Bean生命周期
 
-![image-20200915214914132](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/image-20200915215400858.png)
+![image-20200915214914132](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/image-20200915214914132.png)
 
 
 
