@@ -99,8 +99,11 @@ public void registerBeanDefinitions(AnnotationMetadata importingclassMetadata, B
         for (class mapper :mappers){
             BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition();
             AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
+            //改变bean的class
             beanDefinition.setBeanclass(CustomFactoryBean.class);
-            beanDefinition.getconstructorArgumentvalues().addGenericArgumentValue(mapper);	   //像容器中注册不同的mapper,生成不同的对象
+            //设置bean构造函数的参数
+       beanDefinition.getconstructorArgumentvalues().addGenericArgumentValue(mapper);	   
+            //向容器中注册不同的mapper,会根据不同的构造函数参数生成生成不同的对象bean
             registry.registerBeanDefinition(mapper.getsimpleName(), beanDefinition);
         }
     }
