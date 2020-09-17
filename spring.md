@@ -2,18 +2,6 @@
 
 [TOC]
 
-## Spring循环依赖
-
-循环依赖描述：
-
-![image-20200915215237644](C:\Users\tanqi\AppData\Roaming\Typora\typora-user-images\image-20200915215237644.png)
-
-原因分析及解决思路：
-
-![image-20200915214544933](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/image-20200915214544933.png)
-
-![image-20200915215400858](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/image-20200915215400858.png)
-
 ## Bean生命周期
 
 简化流程：
@@ -28,8 +16,7 @@
 
 ```mermaid
 graph TD
-开始--> A[class字节码] --转化-->BeanDefinition描述bean定义-->BeanFactory组建完成,但还没有创建实际的Bean-->BeanFactoryPostProcesso-->B[new class]-->填充属性-->Aware
--->初始化-->AOP生成新的代理对象-->单例池
+开始--> A[class字节码] --转化-->BeanDefinition描述bean定义-->BeanFactory组建完成,但还没有创建实际的Bean-->BeanFactoryPostProcesso-->B[new class]-->填充属性-->Aware,init-->BeanPostProcessor,AOP生成新的代理对象-->单例池
 ```
 
 
@@ -128,3 +115,39 @@ public void registerBeanDefinitions(AnnotationMetadata importingclassMetadata, B
 ### 单例池
 
 ConCurrentHashMap
+
+
+
+## Spring循环依赖
+
+循环依赖描述：
+
+![](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/20200916194556.png)
+
+原因分析及解决思路：
+
+![image-20200915214544933](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/image-20200915214544933.png)
+
+![image-20200915215400858](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/image-20200915215400858.png)
+
+一级缓存：原始对象的map，还没有填充属性
+
+```java
+/** Cache of singleton factories: bean name to ObjectFactory. */
+	private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
+```
+
+二级缓存：bean单例池的map
+
+```java
+/** Cache of singleton objects: bean name to bean instance. */
+	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
+```
+
+三级缓存：AOP代理对象的map<beanName,ObjectFactory>
+
+```java
+/** Cache of early singleton objects: bean name to bean instance. */
+	private final Map<String, Object> earlySingletonObjects = new HashMap<>(16);
+```
+
