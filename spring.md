@@ -1,4 +1,4 @@
-# SPRING
+#  SPRING
 
 [TOC]
 
@@ -16,7 +16,7 @@
 
 ```mermaid
 graph TD
-开始--> A[class字节码] --转化-->BeanDefinition描述bean定义-->BeanFactory组建完成,但还没有创建实际的Bean-->BeanFactoryPostProcesso-->B[new class]-->填充属性-->Aware,init-->BeanPostProcessor,AOP生成新的代理对象-->单例池
+开始--> A[class字节码] --转化-->BeanDefinition描述bean定义-->BeanFactory组建完成,但还没有创建实际的Bean-->BeanFactoryPostProcessor-->B[new class]-->填充属性-->Aware回调-->init初始化-->BeanPostProcessor,AOP生成新的代理对象-->单例池
 ```
 
 
@@ -114,9 +114,17 @@ class CustomFactoryBean implements FactoryBean{
     }
 ```
 
-### Aware,init
+### Aware
 
+填充属性后，执行各种回调
 
+例如：BeanNameAware，BeanFactoryAware,ApplicationContextAware
+
+### init
+
+初始化,执行各种初始化回调
+
+例如：InitiallizingBean，PostConstruct
 
 ### BeanPostProcessor
 
@@ -124,9 +132,9 @@ class CustomFactoryBean implements FactoryBean{
 
 
 
-### BeanFactory单例池（DefaultListableBeanFactory）
+### BeanFactory单例池
 
-默认的实现：DefaultListableBeanFactory
+默认的实现：**DefaultListableBeanFactory**
 
 ![image-20200920114902315](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/20200920114909.png)
 
@@ -136,7 +144,9 @@ class CustomFactoryBean implements FactoryBean{
 
 ## Spring循环依赖
 
-循环依赖描述：
+**注意：**==spring没有解决构造器的循环依赖==
+
+循环依赖描述： 
 
 ![](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/20200916194556.png)
 
@@ -146,24 +156,41 @@ class CustomFactoryBean implements FactoryBean{
 
 ![image-20200915215400858](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/image-20200915215400858.png)
 
-一级缓存：原始对象的map，还没有填充属性
+### singletonObjects(一级缓存)
 
-```java
-/** Cache of singleton factories: bean name to ObjectFactory. */
-	private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
-```
-
-二级缓存：bean单例池的map
+一级缓存： 用于存放完全初始化好的 bean，**从该缓存中取出的 bean 可以直接使用**
 
 ```java
 /** Cache of singleton objects: bean name to bean instance. */
-	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
+private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
 ```
 
-三级缓存：AOP代理对象的map<beanName,ObjectFactory>
+### earlySingletonObjects(二级缓存)
+
+二级缓存：存放原始的 bean 对象或者拿原始对象进行了AOP之后的得到的代理对象，原始对象还未惊醒属性注入和后续的BeanPostProcessor等生命周期
 
 ```java
 /** Cache of early singleton objects: bean name to bean instance. */
-	private final Map<String, Object> earlySingletonObjects = new HashMap<>(16);
+private final Map<String, Object> earlySingletonObjects = new HashMap<>(16);
 ```
 
+### singletonFactories(三级缓存)
+
+缓存的是一个**ObjectFactory**,主要用来去生成原始对象进行了AOP之后得到的代理对象，如果没有AOP则生成原始对象，ObjectFactory是一个生成bean的lambda表达式，这个表达式定义了怎样生成bean(生成原始bean或者代原始bean代理后的bean)。在每个Bean的生成过程中，都会提前暴露一个工厂，这个工厂可能用到，也可能用不到，如果没有出现循环依赖依赖本bean,那么这个工厂无用，本bean按照自己的生命周期执行，执行完后直接把本bean放入singletonObjects中即可，如果出现了循环依赖依赖了本bean,则另外那个bean执行ObjectFactory提交得到一个AOP之后的代理对象，并将该对象放入到二级缓存中。
+
+```java
+/** Cache of singleton factories: bean name to ObjectFactory. */
+private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
+```
+
+
+
+### earlyProxyReferences 
+
+这也是一个缓存，记录了某个原始对象是否进行过aop了。
+
+
+
+
+
+如果只有二级缓存可以解决一般的循环依赖，但是无法解决aop产生的的循环依赖
