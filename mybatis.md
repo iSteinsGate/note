@@ -1,3 +1,11 @@
+### mybatis工作原理
+
+通过Resource加载mapper.xml,生成一个inputstream的输入流，创建sqlsessionfactorybuilder对象，听过该对象的builder(inputstream)方法，返回一个sqlsessionfactory对象，由sqlsessionfactory对象生成sqlsession,通过statement id 找到对应的statement,通过传入的参数进行一系列的复杂判断生成要执行的sql,通过jdbc执行sql,然后把结果封装成map、list等返回.
+
+
+
+### 一级缓存与二级缓存
+
 一级缓存
 
 使用PerpetualCache
@@ -8,7 +16,7 @@
 
 使用SerializedCache
 
-### 一级缓存与二级缓存
+### 
 
 mybatis默认开启一级缓存
 

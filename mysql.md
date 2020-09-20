@@ -1,3 +1,7 @@
+## mysql逻辑结构
+
+![](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/20200920120926.png)
+
 ## 查看mysql库大小，表大小，索引大小
 
 **说明：**

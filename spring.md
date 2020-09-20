@@ -33,6 +33,37 @@ graph TD
 
 BeanFactory组建完成，得到的是BeanDefinition对象集合
 
+### BeanDefinitionRegistrar
+
+**ImportBeanDefinitionRegistrar**向容器（beanDefinitionMap）中注册自定义的BeanDefinition
+
+```java
+public class CustomBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
+    
+    @Override
+    public void registerBeanDefinitions(AnnotationMetadata importingclassMetadata, BeanDefinitionRegistry registry) {
+        //mapper集合，可改成通过注解扫码包方式获取到所有的mapper
+        List<Class> mappers = new ArrayList<>();
+        mappers.add(UserMapper.class);
+        mappers.add(orderMapper.class);
+        for (class mapper :mappers){
+            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition();
+            AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
+            //改变bean的class
+            beanDefinition.setBeanclass(CustomFactoryBean.class);
+            //设置bean构造函数的参数
+            beanDefinition.getconstructorArgumentvalues().addGenericArgumentValue(mapper);
+            //向容器中注册不同的mapper,会根据不同的构造函数参数生成生成不同的对象bean
+            registry.registerBeanDefinition(mapper.getsimpleName(), beanDefinition);
+        }
+    }
+}
+```
+
+
+
+
+
 ### BeanFactoryPostProcessor
 
 **BeanFactory的后置处理器**,BeanFactory组建完成,可以使用该接口修改BeanDefinition
@@ -61,6 +92,8 @@ class CustomBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 
 ### FactoryBean
 
+通过该接口，可以生成或修改对象生成的bean，也可以生成代理对象。例如可以通过该对象生成mybatis中mapper.xml对应的bean
+
 **通过BeanFactoryPostProcessor实现生成mybatis的mapper代理对象**
 
 ```java
@@ -81,27 +114,6 @@ class CustomFactoryBean implements FactoryBean{
     }
 ```
 
-BeanDefinitionRegistrar:用来在beanFactory组建完成后，注册自定义的BeanDefinition
-
-```java
-public void registerBeanDefinitions(AnnotationMetadata importingclassMetadata, BeanDefinitionRegistry) {
-        //mapper集合，可改成通过注解扫码包方式获取到所有的mapper
-        List<Class> mappers = new ArrayList<>();
-        mappers.add(UserMapper.class);
-        mappers.add(orderMapper.class);
-        for (class mapper :mappers){
-            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition();
-            AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
-            //改变bean的class
-            beanDefinition.setBeanclass(CustomFactoryBean.class);
-            //设置bean构造函数的参数
-       beanDefinition.getconstructorArgumentvalues().addGenericArgumentValue(mapper);	   
-            //向容器中注册不同的mapper,会根据不同的构造函数参数生成生成不同的对象bean
-            registry.registerBeanDefinition(mapper.getsimpleName(), beanDefinition);
-        }
-    }
-```
-
 ### Aware,init
 
 
@@ -112,9 +124,13 @@ public void registerBeanDefinitions(AnnotationMetadata importingclassMetadata, B
 
 
 
-### 单例池
+### BeanFactory单例池（DefaultListableBeanFactory）
 
-ConCurrentHashMap
+默认的实现：DefaultListableBeanFactory
+
+![image-20200920114902315](https://raw.githubusercontent.com/iSteinsGate/picture/master/images/20200920114909.png)
+
+
 
 
 
