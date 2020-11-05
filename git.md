@@ -1,5 +1,20 @@
 # GIT
 
+### git初始化
+
+1. 生成key
+
+   ```bash
+   ssh-keygen -o
+   ```
+ 
+2. 设置邮箱用户名
+
+   ```bash
+      git config --global user.name "tanqinghui"
+      git config --global user.email tanqinghui1995@163.com
+   ```
+
 ### git初始化仓库
 
 1. 库初始化
