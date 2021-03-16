@@ -49,8 +49,13 @@
    ```
    git push --set-upstream origin master
    ```
-
-
+6. 修改关联的远程仓库
+ ```
+  先删除关联的远程仓库
+  git remote rm origin
+  重新关联远程仓库
+   git remote add orgin git@github.com:iSteinsGate/note.git
+   ```
 
 
 ### git alias
